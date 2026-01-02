@@ -1,0 +1,45 @@
+<%- include('../partials/head') %>
+
+<div class="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+        <h1 class="text-4xl font-black text-gray-900 tracking-tight sm:text-5xl">Community Leaderboard</h1>
+        <p class="mt-4 text-xl text-gray-500">The world's top prompt engineers, ranked by reputation.</p>
+    </div>
+
+    <div class="bg-white shadow-xl rounded-[2rem] border border-gray-100 overflow-hidden ring-8 ring-indigo-50/50">
+        <ul class="divide-y divide-gray-100">
+            <% topUsers.forEach((user, index) => { %>
+                <li class="px-8 py-6 flex items-center hover:bg-gray-50 transition group">
+                    <div class="w-12 text-2xl font-black text-gray-300 group-hover:text-indigo-200 transition">
+                        #<%= index + 1 %>
+                    </div>
+                    
+                    <div class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-black shadow-sm ring-2 ring-white">
+                        <%= user.username[0].toUpperCase() %>
+                    </div>
+
+                    <div class="ml-6 flex-grow">
+                        <a href="/u/<%= user.username %>" class="text-lg font-bold text-gray-900 hover:text-indigo-600 transition">u/<%= user.username %></a>
+                        <p class="text-xs text-gray-400 line-clamp-1 mt-0.5"><%= user.bio || 'Professional Prompt Engineer' %></p>
+                    </div>
+
+                    <div class="text-right">
+                        <div class="text-lg font-black text-indigo-600"><%= user.reputation_score %></div>
+                        <div class="text-[10px] font-black uppercase tracking-widest text-gray-400">Reputation</div>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+
+    <div class="mt-12 p-8 bg-indigo-900 rounded-3xl text-center text-white shadow-2xl relative overflow-hidden">
+        <div class="relative z-10">
+            <h3 class="text-xl font-bold">Want to climb the ranks?</h3>
+            <p class="mt-2 text-indigo-200 text-sm">Contribute upvotes, create premium prompts, and get remixed by the community.</p>
+            <a href="/library" class="mt-6 inline-block bg-white text-indigo-900 px-6 py-2 rounded-xl font-bold hover:bg-indigo-50 transition">Browse Library</a>
+        </div>
+        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+    </div>
+</div>
+
+<%- include('../partials/foot') %>

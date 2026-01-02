@@ -1,0 +1,33 @@
+<%- include('../../partials/head') %>
+
+<div class="max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
+    <div class="text-center mb-20">
+        <h1 class="text-5xl font-black text-gray-900 tracking-tight">Community Playlists</h1>
+        <p class="mt-4 text-xl text-gray-500 italic max-w-2xl mx-auto">Vetted collections of prompts curated by the world's top prompt engineers.</p>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <% playlists.forEach(list => { %>
+            <div class="bg-white rounded-[2rem] border border-gray-200 p-8 hover:shadow-2xl transition duration-500 flex flex-col h-full ring-1 ring-black/5">
+                <div class="flex-grow">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-indigo-50 rounded-2xl text-indigo-600 shadow-inner">
+                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        </div>
+                        <span class="text-[10px] font-black uppercase bg-gray-900 text-white px-3 py-1 rounded-full"><%= list.item_count %> Prompts</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-black text-gray-900 leading-tight mb-2"><%= list.name %></h3>
+                    <p class="text-sm text-gray-400 font-medium">Curated by <a href="/u/<%= list.creator_handle %>" class="text-indigo-600 font-black hover:underline">u/<%= list.creator_handle %></a></p>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-50 flex items-center justify-between">
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-widest"><%= list.follow_count %> Followers</div>
+                    <a href="/library/playlists/<%= list.slug %>" class="bg-gray-50 text-gray-900 px-6 py-2 rounded-xl font-bold text-sm hover:bg-gray-900 hover:text-white transition">View List</a>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<%- include('../../partials/foot') %>

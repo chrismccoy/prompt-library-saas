@@ -1,0 +1,46 @@
+<%- include('../../partials/head') %>
+<%- include('../../partials/admin-nav') %>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="md:flex md:items-center md:justify-between mb-8">
+        <h2 class="text-2xl font-bold text-gray-900">AI Engines</h2>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+        <div class="bg-white shadow sm:rounded-lg p-6 h-fit border border-gray-200">
+            <h3 class="text-lg font-medium text-gray-900 mb-4 uppercase text-xs tracking-widest">Add New Model</h3>
+            <form action="/admin/engines" method="POST" class="space-y-4">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Model Name</label>
+                    <input type="text" name="name" required placeholder="Claude 4, GPT-5..." class="block w-full border-gray-300 rounded-lg p-2 text-sm border">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Brand Color</label>
+                    <input type="color" name="color_hex" value="#4f46e5" class="block w-full h-10 border-gray-300 rounded-lg p-1 border">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-bold text-sm">Add Engine</button>
+            </form>
+        </div>
+
+        <div class="lg:col-span-2 grid gap-4">
+            <% engines.forEach(e => { %>
+                <div class="bg-white p-6 rounded-xl border border-gray-200 flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <div class="w-4 h-4 rounded-full" style="background-color: <%= e.color_hex %>"></div>
+                        <div>
+                            <h4 class="font-bold text-gray-900"><%= e.name %></h4>
+                            <p class="text-xs text-gray-400 font-mono">slug: <%= e.slug %></p>
+                        </div>
+                    </div>
+                    <form action="/admin/engines/<%= e.id %>/delete" method="POST" onsubmit="return confirm('Delete this engine?')">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button type="submit" class="text-red-500 text-xs font-black uppercase hover:underline">Remove</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+<%- include('../../partials/foot') %>

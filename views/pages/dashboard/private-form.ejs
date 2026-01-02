@@ -1,0 +1,49 @@
+<%- include('../../partials/head') %>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="mb-8">
+        <h2 class="text-3xl font-bold text-gray-900"><%= title %></h2>
+        <a href="/dashboard/my-prompts" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">&larr; Back to Private Library</a>
+    </div>
+
+    <form action="<%= action %>" method="POST" class="bg-white shadow-sm border border-gray-200 rounded-xl p-8 space-y-6">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wide">Title</label>
+            <input type="text" name="title" required value="<%= prompt ? prompt.title : '' %>" placeholder="E.g. Daily Meeting Summary" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 border">
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wide">Summary (Short description)</label>
+            <textarea name="summary" rows="2" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 border"><%= prompt ? prompt.summary : '' %></textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 uppercase tracking-wide">Prompt Content</label>
+            <textarea name="content" rows="12" required class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 font-mono text-sm p-4 border" placeholder="Paste your prompt here..."><%= prompt ? prompt.content : '' %></textarea>
+        </div>
+
+        <div class="flex justify-between items-center pt-4">
+            <% if (prompt) { %>
+                <button type="button" @click="if(confirm('Delete permanently?')) { document.getElementById('delete-form').submit(); }" class="text-red-600 text-sm font-bold uppercase tracking-wider hover:underline">
+                    Delete Prompt
+                </button>
+            <% } else { %>
+                <span></span>
+            <% } %>
+
+            <button type="submit" class="inline-flex justify-center py-3 px-8 border border-transparent shadow-sm text-sm font-bold rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+                Save Private Prompt
+            </button>
+        </div>
+    </form>
+
+    <% if (prompt) { %>
+        <form id="delete-form" action="/dashboard/my-prompts/<%= prompt.id %>/delete" method="POST" class="hidden">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+    <% } %>
+</div>
+
+<%- include('../../partials/foot') %>

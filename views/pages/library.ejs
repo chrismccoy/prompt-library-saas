@@ -1,0 +1,132 @@
+<%- include('../partials/head') %>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+  <div class="border-b border-gray-100 pb-8 mb-8">
+    <div class="flex flex-col md:flex-row justify-between items-center md:items-end gap-10 mb-8">
+      
+      <div class="max-w-2xl text-center md:text-left">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-[0.3em] mb-4">Discovery Engine</div>
+        
+        <% if (query.category) { %>
+          <h1 class="text-6xl font-black text-gray-900 tracking-tighter sm:text-7xl leading-[0.85]">Archives: <%= (categories || []).find(c => c.slug === query.category)?.name || 'Category' %></h1>
+        <% } else if (query.tag) { %>
+          <h1 class="text-6xl font-black text-gray-900 tracking-tighter sm:text-7xl leading-[0.85]">Vector: #<%= query.tag %></h1>
+        <% } else if (query.model) { %>
+          <h1 class="text-6xl font-black text-gray-900 tracking-tighter sm:text-7xl leading-[0.85]">Core: <%= (engines || []).find(e => e.slug === query.model)?.name || 'Model' %></h1>
+        <% } else { %>
+          <h1 class="text-6xl font-black text-gray-900 tracking-tighter sm:text-7xl leading-[0.85]">Global Catalog</h1>
+        <% } %>
+        
+        <p class="mt-4 text-xl text-gray-400 font-medium leading-relaxed max-w-lg">Vetted architectural blueprints for high-frequency AI orchestration.</p>
+      </div>
+
+      <% if (typeof trending !== 'undefined' && trending.length > 0) { %>
+        <div class="flex flex-col items-center md:items-end gap-3">
+          <span class="text-[10px] font-black text-gray-300 uppercase tracking-[0.2em]">Trending Vectors</span>
+          <div class="flex flex-wrap justify-center md:justify-end gap-2">
+            <% trending.forEach(item => { %>
+              <a href="/library/search/<%= item.query %>" class="relative z-40 text-[10px] font-bold text-gray-500 bg-white border border-gray-100 px-5 py-2.5 rounded-2xl shadow-sm hover:border-indigo-500 hover:text-indigo-600 transition-all uppercase tracking-tighter hover:-translate-y-0.5"><%= item.query %></a>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
+    </div>
+
+    <div class="flex flex-wrap gap-2 items-center">
+      <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">Target Core:</span>
+      <% (engines || []).forEach(engine => { %>
+        <% const isActive = query.model === engine.slug; %>
+        <a href="/library/model/<%= engine.slug %>" class="relative z-40 px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.1em] transition-all border-2 shadow-sm active:scale-95 hover:-translate-y-1" style="border-color: <%= engine.color_hex %>; background-color: <%= isActive ? engine.color_hex : 'transparent' %>; color: <%= isActive ? '#fff' : engine.color_hex %>"><%= engine.name %></a>
+      <% }) %>
+    </div>
+  </div>
+
+  <% if (prompts && prompts.length > 0) { %>
+
+    <div class="flex items-center gap-4 mb-10 overflow-x-auto pb-4 no-scrollbar">
+      <a href="/library" class="relative z-40 shrink-0 px-8 py-4 rounded-[1.25rem] text-xs font-black uppercase tracking-widest transition shadow-lg <%= !query.category && !query.model ? 'bg-indigo-600 text-white shadow-indigo-100' : 'bg-white text-gray-400 border border-gray-100 hover:border-indigo-400 hover:text-indigo-500' %>">All Systems</a>
+      <div class="h-8 w-px bg-gray-200 mx-1"></div>
+      <% (categories || []).forEach(c => { %>
+        <a href="/library/category/<%= c.slug %>" class="relative z-40 shrink-0 px-8 py-4 rounded-[1.25rem] text-xs font-black uppercase tracking-widest border transition shadow-sm <%= query.category === c.slug ? 'bg-indigo-600 text-white border-indigo-600 shadow-indigo-100' : 'bg-white text-gray-400 border border-gray-100 hover:border-indigo-400 hover:text-indigo-500' %>"><%= c.name %></a>
+      <% }) %>
+    </div>
+    
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      <% prompts.forEach(prompt => { %>
+        <div class="group relative bg-white rounded-[2.5rem] transition-all duration-500 flex flex-col h-full overflow-hidden border border-gray-100 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.08)] hover:-translate-y-3 ring-1 ring-black/[0.02]">
+          
+          <div class="h-1.5 w-full" style="background-color: <%= prompt.engine_color || '#e5e7eb' %>"></div>
+
+          <a href="/library/<%= prompt.slug %>" class="absolute inset-0 z-10" aria-label="Open Blueprint <%= prompt.title %>"></a>
+
+          <div class="p-10 flex-grow relative">
+            
+            <div class="flex justify-between items-start mb-8 relative z-20 pointer-events-none">
+              <div class="flex flex-col gap-2">
+                <span class="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-indigo-500"><%= prompt.category_name %></span>
+                <div class="inline-flex items-center px-2 py-0.5 rounded bg-gray-900 text-white text-[9px] font-black uppercase tracking-tighter">
+                  <svg class="w-2 h-2 mr-1 text-indigo-400" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>
+                  <%= prompt.engine_name || prompt.target_model %>
+                </div>
+              </div>
+              <% if (prompt.is_free) { %>
+                <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-sm">
+                  <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
+                  <span class="text-[9px] font-black uppercase tracking-widest">Public</span>
+                </div>
+              <% } else { %>
+                <div class="p-2.5 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 shadow-sm">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                </div>
+              <% } %>
+            </div>
+
+            <h3 class="text-3xl font-black text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-[1.1] mb-2 tracking-tighter relative z-20 pointer-events-none"><%= prompt.title %></h3>
+            
+            <% if (prompt.tags && prompt.tags.length > 0) { %>
+              <div class="flex flex-wrap gap-2 mt-5 mb-8 relative z-30">
+                <% prompt.tags.slice(0, 3).forEach(tag => { %>
+                  <a href="/library/tag/<%= tag.slug %>" class="inline-block relative z-40 text-[9px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-xl uppercase tracking-tighter shadow-sm hover:bg-indigo-600 hover:text-white transition-all duration-200">#<%= tag.name %></a>
+                <% }) %>
+              </div>
+            <% } %>
+
+            <p class="text-sm text-gray-500 font-medium leading-relaxed line-clamp-3 mb-4 relative z-20 pointer-events-none"><%= prompt.summary %></p>
+          </div>
+
+          <div class="px-10 pb-10 mt-auto relative z-20 flex items-center justify-between pointer-events-none">
+             <div class="flex items-center gap-1.5 bg-gray-50 border border-gray-100 px-4 py-2 rounded-2xl shadow-inner">
+                <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                <span class="font-mono text-[10px] font-bold text-gray-600"><%= prompt.views_count %></span>
+             </div>
+             <div class="flex items-center text-[10px] font-black uppercase text-indigo-600 tracking-widest gap-1 group-hover:gap-2 transition-all">
+               Inspect Blueprint
+               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+             </div>
+          </div>
+
+        </div>
+      <% }) %>
+    </div>
+
+  <% } else { %>
+
+    <div class="py-32 text-center bg-white rounded-[4rem] border border-gray-100 shadow-sm ring-1 ring-black/[0.02]">
+      <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-[2rem] bg-indigo-50 mb-8 transform rotate-6 shadow-inner">
+        <svg class="h-10 w-10 text-indigo-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </div>
+      <h2 class="text-5xl font-black text-gray-900 mb-4 tracking-tighter">Blueprint Mismatch</h2>
+      <p class="text-gray-400 font-medium max-w-sm mx-auto leading-relaxed italic text-lg">"The search criteria yielded no functional results in the current matrix."</p>
+      <div class="mt-12 flex flex-col sm:flex-row justify-center gap-4 px-6 relative z-50">
+        <a href="/library" class="px-12 py-5 bg-gray-900 text-white rounded-[1.5rem] font-black uppercase text-xs tracking-[0.2em] shadow-2xl active:scale-95 transition hover:bg-black">Reset Discovery</a>
+        <a href="/" class="px-12 py-5 bg-white text-gray-400 border border-gray-100 rounded-[1.5rem] font-black uppercase text-xs tracking-[0.2em] hover:bg-gray-50 transition">System Home</a>
+      </div>
+    </div>
+
+  <% } %>
+
+</div>
+
+<%- include('../partials/foot') %>

@@ -1,0 +1,14 @@
+<div class="bg-gray-800 border-b border-gray-700 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex space-x-8 h-12 items-center overflow-x-auto text-sm font-medium">
+      <a href="/admin" class="text-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded-md transition <%= typeof title !== 'undefined' && title === 'Admin Overview' ? 'bg-gray-900 text-white' : '' %>">Overview</a>
+      <a href="/admin/engines" class="text-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded-md transition <%= typeof title !== 'undefined' && title.includes('AI Engines') ? 'bg-gray-900 text-white' : '' %>">AI Engines</a>
+      <a href="/admin/prompts" class="text-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded-md transition <%= typeof title !== 'undefined' && title.includes('Prompts') ? 'bg-gray-900 text-white' : '' %>">Prompts</a>
+      <a href="/admin/categories" class="text-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded-md transition <%= typeof title !== 'undefined' && title.includes('Categories') ? 'bg-gray-900 text-white' : '' %>">Categories</a>
+      <a href="/admin/users" class="text-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded-md transition <%= typeof title !== 'undefined' && title.includes('Users') ? 'bg-gray-900 text-white' : '' %>">Users</a>
+      <a href="/admin/coupons" class="text-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded-md transition <%= typeof title !== 'undefined' && title.includes('Coupons') ? 'bg-gray-900 text-white' : '' %>">Coupons</a>
+      <a href="/admin/analytics" class="text-gray-300 hover:text-white hover:bg-gray-700 px-3 py-2 rounded-md transition <%= typeof title !== 'undefined' && title.includes('Analytics') ? 'bg-gray-900 text-white' : '' %>">Analytics</a>
+    </div>
+  </div>
+</div>
+<%- include('../partials/flash') %>

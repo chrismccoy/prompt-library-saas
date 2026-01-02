@@ -1,0 +1,62 @@
+<%- include('../../partials/head') %>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="md:flex md:items-center md:justify-between mb-8">
+        <div class="flex-1 min-w-0">
+            <nav class="flex mb-4" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2 text-sm text-gray-500">
+                    <li><a href="/dashboard/collections" class="hover:text-indigo-600 transition">Collections</a></li>
+                    <li><svg class="h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg></li>
+                    <li class="text-gray-900 font-bold"><%= collection.name %></li>
+                </ol>
+            </nav>
+            <h2 class="text-3xl font-black text-gray-900"><%= collection.name %></h2>
+            <p class="text-gray-500 mt-1 italic">Personal folder with <%= collection.items.length %> prompts.</p>
+        </div>
+        
+        <div class="mt-4 flex md:mt-0 md:ml-4">
+            <form action="/dashboard/collections/<%= collection.id %>/delete" method="POST" onsubmit="return confirm('Delete this collection? Prompts will not be deleted, only the folder.')">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-200 text-sm font-bold rounded-xl text-red-600 bg-red-50 hover:bg-red-100 transition">
+                    Delete Folder
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <% if (collection.items.length === 0) { %>
+        <div class="bg-white rounded-[2rem] border-2 border-dashed border-gray-200 p-20 text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4a2 2 0 012-2m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+            <h3 class="mt-2 text-sm font-bold text-gray-900">Folder is empty</h3>
+            <p class="mt-1 text-sm text-gray-500">Go to the library and click "Add to Folder" to organize your workflow.</p>
+            <a href="/library" class="mt-6 inline-block bg-indigo-600 text-white px-6 py-2 rounded-xl font-bold text-sm">Browse Prompts</a>
+        </div>
+    <% } else { %>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <% collection.items.forEach(p => { %>
+                <div class="group bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition relative flex flex-col h-full">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-indigo-400"><%= p.category_name %></span>
+                            <form action="/dashboard/collections/<%= collection.id %>/remove/<%= p.id %>" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit" class="text-gray-300 hover:text-red-500 transition" title="Remove from collection">
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                </button>
+                            </form>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition"><%= p.title %></h3>
+                        <p class="mt-2 text-sm text-gray-500 line-clamp-2"><%= p.summary %></p>
+                    </div>
+                    <div class="px-6 pb-6 mt-auto">
+                        <a href="/library/<%= p.slug %>" class="text-xs font-black uppercase text-indigo-600 tracking-widest flex items-center gap-1">
+                            Open Prompt &rarr;
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../../partials/foot') %>

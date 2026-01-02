@@ -1,0 +1,43 @@
+<%- include('../../partials/head') %>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="md:flex md:items-center md:justify-between mb-8">
+        <div class="flex-1">
+            <h2 class="text-3xl font-bold text-gray-900">Collections</h2>
+            <p class="text-gray-500">Organize prompts into custom folders.</p>
+        </div>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+        <div class="bg-white shadow rounded-xl border border-gray-200 p-6 h-fit">
+            <h3 class="font-bold text-gray-900 mb-4 uppercase text-xs tracking-widest">New Collection</h3>
+            <form action="/dashboard/collections" method="POST" class="space-y-4">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input type="text" name="name" required placeholder="Project Alpha..." class="block w-full border-gray-300 rounded-lg p-2 text-sm border">
+                <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-bold text-sm">Create Folder</button>
+            </form>
+        </div>
+
+        <div class="lg:col-span-2 grid gap-4">
+            <% if (collections.length === 0) { %>
+                <div class="bg-gray-50 border-2 border-dashed rounded-xl p-12 text-center text-gray-400">No collections created.</div>
+            <% } %>
+            <% collections.forEach(c => { %>
+                <div class="bg-white p-6 rounded-xl border border-gray-200 flex items-center justify-between hover:shadow-sm transition">
+                    <div class="flex items-center gap-4">
+                        <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900"><%= c.name %></h4>
+                            <p class="text-xs text-gray-400">Created <%= new Date(c.created_at).toLocaleDateString() %></p>
+                        </div>
+                    </div>
+                    <a href="/dashboard/collections/<%= c.slug %>" class="text-indigo-600 font-bold text-sm">Open &rarr;</a>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+<%- include('../../partials/foot') %>
