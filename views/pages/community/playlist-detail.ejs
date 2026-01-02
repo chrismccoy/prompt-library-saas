@@ -1,0 +1,69 @@
+<%- include('../../partials/head') %>
+
+<div class="max-w-5xl mx-auto px-4 py-16 sm:px-6 lg:px-8" x-data="playlistManager()">
+    <div class="bg-indigo-900 rounded-[3rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden mb-12">
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-end gap-8">
+            <div class="max-w-2xl text-center md:text-left">
+                <span class="text-xs font-black uppercase tracking-[0.3em] text-indigo-300">Public Playlist</span>
+                <h1 class="text-4xl md:text-6xl font-black mt-2 leading-tight"><%= collection.name %></h1>
+                <p class="mt-6 text-indigo-100 flex items-center gap-2 justify-center md:justify-start">
+                    <span class="font-black">u/<%= collection.creator_handle %></span>
+                    <span class="opacity-30">•</span>
+                    <span><%= collection.items.length %> Curated Prompts</span>
+                </p>
+            </div>
+            
+            <div class="shrink-0">
+                <button 
+                    @click="toggleFollow()" 
+                    :class="isFollowing ? 'bg-indigo-400 text-white' : 'bg-white text-indigo-900'"
+                    class="px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl transition-all active:scale-95"
+                >
+                    <span x-text="isFollowing ? 'Following' : 'Follow List'"></span>
+                </button>
+            </div>
+        </div>
+        <div class="absolute -top-20 -right-20 w-80 h-80 bg-indigo-500 rounded-full blur-[100px] opacity-20"></div>
+    </div>
+
+    <div class="grid gap-6">
+        <% collection.items.forEach(p => { %>
+            <a href="/library/<%= p.slug %>" class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex items-center justify-between group">
+                <div class="flex-grow">
+                    <div class="flex items-center gap-3 mb-1">
+                        <span class="text-[9px] font-black uppercase tracking-widest text-gray-400 bg-gray-50 px-1.5 rounded"><%= p.target_model %></span>
+                        <% if (p.is_free) { %><span class="text-[9px] font-black text-green-600 uppercase tracking-widest">Free</span><% } %>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition"><%= p.title %></h3>
+                    <p class="text-sm text-gray-400 line-clamp-1 mt-1"><%= p.summary %></p>
+                </div>
+                <div class="ml-8 shrink-0">
+                    <div class="h-12 w-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition shadow-inner">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </div>
+                </div>
+            </a>
+        <% }) %>
+    </div>
+</div>
+
+<script>
+function playlistManager() {
+    return {
+        isFollowing: <%= isFollowing %>,
+        async toggleFollow() {
+            try {
+                const res = await fetch(`/library/playlists/<%= collection.id %>/follow`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'CSRF-Token': '<%= csrfToken %>' }
+                });
+                if (res.status === 401) return window.location.href = '/login';
+                const data = await res.json();
+                this.isFollowing = data.isFollowing;
+            } catch (e) { console.error(e); }
+        }
+    }
+}
+</script>
+
+<%- include('../../partials/foot') %>

@@ -1,0 +1,31 @@
+<%- include('../partials/head') %>
+
+<div class="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+    <div class="text-center">
+        <div class="inline-block h-24 w-24 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mb-6 ring-4 ring-white shadow-lg">
+            <span class="text-3xl font-black uppercase"><%= profileUser.username[0] %></span>
+        </div>
+        <h1 class="text-4xl font-extrabold text-gray-900">u/<%= profileUser.username %></h1>
+        <% if (profileUser.bio) { %>
+            <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed"><%= profileUser.bio %></p>
+        <% } %>
+    </div>
+
+    <div class="mt-16">
+        <h2 class="text-xl font-bold text-gray-900 mb-8 flex items-center gap-2">
+            <svg class="w-5 h-5 text-pink-500" fill="currentColor" viewBox="0 0 20 20"><path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"/></svg>
+            Public Favorites
+        </h2>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+            <% favorites.forEach(prompt => { %>
+                <a href="/library/<%= prompt.slug %>" class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition group">
+                    <span class="text-[10px] font-black uppercase text-indigo-600 tracking-widest"><%= prompt.category_name %></span>
+                    <h3 class="mt-2 font-bold text-gray-900 group-hover:text-indigo-600 transition"><%= prompt.title %></h3>
+                </a>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/foot') %>

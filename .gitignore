@@ -1,0 +1,5 @@
+.env
+node_modules
+storage
+package-lock.json
+public/assets/app.css

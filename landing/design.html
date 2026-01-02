@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Prompt Library Pro — The Enterprise Prompt Workstation</title>
+        <meta
+            name="description"
+            content="Hand-vetted AI prompts for pros. Featuring a private vault, interactive variable lab, and community playlists. Optimized for GPT-4o and Claude 3.5."
+        />
+
+        <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        />
+
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: { sans: ["Inter", "sans-serif"] },
+                    },
+                },
+            };
+        </script>
+        <style>
+            [x-cloak] {
+                display: none !important;
+            }
+            .bg-grid {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M40 0H0V40H40V0ZM39 1H1V39H39V1Z' fill='%236366f1' fill-opacity='0.05'/%3E%3C/svg%3E");
+            }
+        </style>
+    </head>
+    <body class="bg-white text-gray-900 antialiased selection:bg-indigo-100 selection:text-indigo-700">
+        <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div
+                        class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-200"
+                    >
+                        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2.5"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"
+                            />
+                        </svg>
+                    </div>
+                    <span class="text-xl font-black text-gray-900 tracking-tighter uppercase italic"
+                        >PromptLib<span class="text-indigo-600">Pro</span></span
+                    >
+                </div>
+                <div
+                    class="hidden lg:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400"
+                >
+                    <a href="#workflow" class="hover:text-indigo-600 transition">Workstation</a>
+                    <a href="#community" class="hover:text-indigo-600 transition">Community</a>
+                    <a href="#infrastructure" class="hover:text-indigo-600 transition">Infrastructure</a>
+                    <a href="#pricing" class="hover:text-indigo-600 transition">Pricing</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a
+                        href="/login"
+                        class="text-xs font-black uppercase tracking-widest text-gray-500 hover:text-gray-900 transition"
+                        >Login</a
+                    >
+                    <a
+                        href="#pricing"
+                        class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase shadow-xl shadow-indigo-200 hover:bg-indigo-700 transition active:scale-95"
+                        >Get Started</a
+                    >
+                </div>
+            </div>
+        </nav>
+
+        <header class="relative pt-20 pb-24 lg:pt-32 lg:pb-40 bg-grid">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 mb-10 shadow-sm"
+                >
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"
+                        ></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
+                    </span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-indigo-600"
+                        >🚀 High-Performance Build v5.3 Optimized</span
+                    >
+                </div>
+                <h1 class="text-6xl md:text-8xl font-black text-gray-900 tracking-tighter leading-[0.85] mb-10">
+                    AI Prompts.<br /><span class="text-indigo-600">Built for Action.</span>
+                </h1>
+                <p class="max-w-3xl mx-auto text-xl text-gray-500 font-medium leading-relaxed mb-14">
+                    Access an elite library of hand-vetted prompts, personalized via our **Advanced Variable Lab**, and
+                    secured in your **Private Vault**. Built for those who demand production-ready output.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                    <a
+                        href="#pricing"
+                        class="w-full sm:w-auto bg-gray-900 text-white px-12 py-6 rounded-2xl font-black uppercase tracking-widest shadow-2xl hover:bg-black transition active:scale-95 text-lg"
+                    >
+                        💎 Buy Lifetime Access
+                    </a>
+                    <a
+                        href="/library"
+                        class="w-full sm:w-auto bg-white text-gray-900 border-2 border-gray-100 px-12 py-6 rounded-2xl font-black uppercase tracking-widest hover:border-indigo-600 transition active:scale-95 text-lg flex items-center justify-center gap-3"
+                    >
+                        Browse Catalog <span class="text-gray-300 font-mono text-sm">⌘K</span>
+                    </a>
+                </div>
+
+                <p class="mt-16 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 mb-8">
+                    Native Support For
+                </p>
+                <div class="flex flex-wrap justify-center items-center gap-12 opacity-30 grayscale contrast-125">
+                    <span class="text-2xl font-black italic">GPT-4o</span>
+                    <span class="text-2xl font-black italic">CLAUDE 3.5</span>
+                    <span class="text-2xl font-black italic">MIDJOURNEY</span>
+                    <span class="text-2xl font-black italic">GEMINI 1.5</span>
+                </div>
+            </div>
+        </header>
+
+        <section id="workflow" class="py-32 bg-gray-900 text-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-20 items-center">
+                    <div class="lg:col-span-5 space-y-12">
+                        <div>
+                            <span class="text-indigo-400 font-black uppercase tracking-[0.3em] text-xs"
+                                >The Workstation</span
+                            >
+                            <h2 class="text-4xl md:text-5xl font-black mt-4 leading-tight tracking-tight">
+                                Your Personal AI Command Center.
+                            </h2>
+                            <p class="mt-6 text-gray-400 text-lg leading-relaxed">
+                                Stop using static text files. Our platform treats prompts like code, giving you the
+                                tools to customize variables and target specific models for maximum accuracy.
+                            </p>
+                        </div>
+
+                        <div class="space-y-8">
+                            <div class="flex gap-6 group">
+                                <div
+                                    class="shrink-0 w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-400 ring-1 ring-indigo-500/20 group-hover:bg-indigo-500 group-hover:text-white transition-all"
+                                >
+                                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.675.338a4 4 0 01-2.586.344l-2.096-.419a2 2 0 01-1.056-.547M20 5a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h16zM4 13h16v7H4v-7z"
+                                        />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xl">🎯 Tailored AI Targets</h4>
+                                    <p class="text-gray-500 mt-2 text-sm leading-relaxed italic">
+                                        "Dynamic AI Engines" allow for instant model updates.
+                                    </p>
+                                    <p class="text-gray-500 mt-1 text-sm leading-relaxed">
+                                        Prompts are specifically tagged for the best results on GPT, Claude, or
+                                        Midjourney.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6 group">
+                                <div
+                                    class="shrink-0 w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-400 ring-1 ring-indigo-500/20 group-hover:bg-indigo-500 group-hover:text-white transition-all"
+                                >
+                                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                        />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xl">🧪 Advanced Variable Lab</h4>
+                                    <p class="text-gray-500 mt-2 text-sm leading-relaxed italic">
+                                        Uses <code>{{Mustache}}</code> or <code>[Bracket]</code> markers.
+                                    </p>
+                                    <p class="text-gray-500 mt-1 text-sm leading-relaxed">
+                                        Customize prompts with <strong>Sliders, Dropdowns, and Switches</strong> to dial
+                                        in variables like <code>{{Tone}}</code> or <code>[Complexity]</code>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 relative">
+                        <div class="bg-gray-800 rounded-[3rem] p-4 shadow-2xl ring-1 ring-white/10">
+                            <div class="bg-gray-950 rounded-[2.5rem] p-8 md:p-12 space-y-8">
+                                <div class="flex justify-between items-center border-b border-gray-800 pb-8">
+                                    <span class="text-[10px] font-black uppercase tracking-[0.4em] text-indigo-500"
+                                        >Live Workstation</span
+                                    >
+                                    <div class="flex gap-2">
+                                        <span
+                                            class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/40"
+                                        ></span>
+                                        <span
+                                            class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/40"
+                                        ></span>
+                                        <span
+                                            class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/40"
+                                        ></span>
+                                    </div>
+                                </div>
+                                <div class="space-y-8">
+                                    <div class="grid grid-cols-2 gap-8">
+                                        <div class="space-y-3">
+                                            <div class="h-1.5 bg-gray-800 rounded-full w-1/2"></div>
+                                            <div
+                                                class="h-12 bg-indigo-500/10 border border-indigo-500/30 rounded-xl flex items-center px-4 text-xs font-bold text-indigo-400"
+                                            >
+                                                Marketing Manager
+                                            </div>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div class="h-1.5 bg-gray-800 rounded-full w-1/2"></div>
+                                            <div class="h-1 flex items-center bg-gray-800 rounded-full mt-6">
+                                                <div class="w-2/3 h-full bg-indigo-600 rounded-full relative">
+                                                    <div
+                                                        class="absolute right-0 -top-2 w-5 h-5 bg-white rounded-full shadow-lg"
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="p-8 bg-indigo-900/5 border border-indigo-500/10 rounded-3xl font-mono text-sm leading-relaxed text-indigo-300"
+                                    >
+                                        "Act as a
+                                        <span
+                                            class="text-white font-bold bg-indigo-600/40 px-1.5 rounded ring-1 ring-indigo-500"
+                                            >Marketing Manager</span
+                                        >. Write a campaign with a creativity level of
+                                        <span
+                                            class="text-white font-bold bg-indigo-600/40 px-1.5 rounded ring-1 ring-indigo-500"
+                                            >85%</span
+                                        >. Focus the strategy on..."
+                                    </div>
+                                    <div class="flex justify-between items-center pt-4">
+                                        <div class="text-[10px] font-black uppercase tracking-widest text-gray-600">
+                                            👁️ Live Writing Preview
+                                        </div>
+                                        <div class="flex gap-3 text-xs font-bold text-indigo-400">
+                                            <span>⌘C to Copy Instant</span>
+                                            <span>Download .txt</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="absolute -bottom-10 -right-10 w-64 h-64 bg-indigo-600 rounded-full blur-[120px] opacity-20"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="community" class="py-32 bg-white relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="mb-24 max-w-2xl mx-auto">
+                    <span class="text-indigo-600 font-black uppercase tracking-[0.3em] text-xs"
+                        >👥 Community Layer</span
+                    >
+                    <h2 class="text-5xl font-black mt-6 text-gray-900 tracking-tight leading-[1.1]">
+                        Don't engineer alone.
+                    </h2>
+                    <p class="mt-6 text-xl text-gray-500">
+                        Claim your <strong>Public User Profile</strong>, curate <strong>Playlists</strong>, and earn
+                        status among the world's best.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                    <div
+                        class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-2xl transition-all duration-500 group"
+                    >
+                        <div
+                            class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform"
+                        >
+                            🔄
+                        </div>
+                        <h4 class="font-black text-2xl text-gray-900">One-Click Remixing</h4>
+                        <p class="text-gray-500 mt-4 leading-relaxed">
+                            Copy public prompts to your <strong>Private Vault</strong> instantly to modify them for your
+                            own needs while keeping a link to the original.
+                        </p>
+                    </div>
+                    <div
+                        class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-2xl transition-all duration-500 group"
+                    >
+                        <div
+                            class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform"
+                        >
+                            📁
+                        </div>
+                        <h4 class="font-black text-2xl text-gray-900">Shareable Playlists</h4>
+                        <p class="text-gray-500 mt-4 leading-relaxed">
+                            Group prompts into "Folders" or "Playlists." Make them public to let the community follow
+                            your curated workflow logic.
+                        </p>
+                    </div>
+                    <div
+                        class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-2xl transition-all duration-500 group"
+                    >
+                        <div
+                            class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform"
+                        >
+                            👥
+                        </div>
+                        <h4 class="font-black text-2xl text-gray-900">Creator Following</h4>
+                        <p class="text-gray-500 mt-4 leading-relaxed">
+                            Subscribe to the world's best prompt engineers to see their latest collections and upvoted
+                            gems directly in your dashboard.
+                        </p>
+                    </div>
+                    <div
+                        class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-2xl transition-all duration-500 group"
+                    >
+                        <div
+                            class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform"
+                        >
+                            🏆
+                        </div>
+                        <h4 class="font-black text-2xl text-gray-900">Global Leaderboard</h4>
+                        <p class="text-gray-500 mt-4 leading-relaxed">
+                            Climb the ranks! Build your <strong>Reputation Points</strong> by contributing high-value
+                            prompts and helpful community upvotes.
+                        </p>
+                    </div>
+                    <div
+                        class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-2xl transition-all duration-500 group"
+                    >
+                        <div
+                            class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform"
+                        >
+                            🎖️
+                        </div>
+                        <h4 class="font-black text-2xl text-gray-900">Verified Pro Badges</h4>
+                        <p class="text-gray-500 mt-4 leading-relaxed">
+                            Look for <strong>🎖️ Verified Badges</strong> on prompt votes. Know instantly if a prompt has
+                            been vetted by a paid member.
+                        </p>
+                    </div>
+                    <div
+                        class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-2xl transition-all duration-500 group"
+                    >
+                        <div
+                            class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform"
+                        >
+                            👤
+                        </div>
+                        <h4 class="font-black text-2xl text-gray-900">Public Profiles</h4>
+                        <p class="text-gray-500 mt-4 leading-relaxed text-sm">
+                            Claim your <strong>u/YourHandle</strong>. Share your bio and best AI engineering work with a
+                            single professional public link.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="infrastructure" class="py-32 bg-gray-50 border-y border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-20">
+                    <h2 class="text-5xl font-black text-gray-900 tracking-tight leading-none mb-6">
+                        Total Platform Control.
+                    </h2>
+                    <p class="text-xl text-gray-500 font-medium italic underline decoration-indigo-200 decoration-4">
+                        The technical architecture of a category leader.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-8 rounded-3xl border border-gray-200 space-y-4">
+                        <div class="text-indigo-600 font-black text-[10px] uppercase tracking-widest">
+                            01 / Search Intelligence
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🔎 Instant Type-Ahead Search
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🖍️ Search Term Highlighting
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                ⌨️ Quick-Action Menu (⌘K)
+                            </li>
+                            <li class="text-sm font-bold text-gray-400 italic">📈 Search Gap Analytics</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-gray-200 space-y-4">
+                        <div class="text-indigo-600 font-black text-[10px] uppercase tracking-widest">
+                            02 / Reliability
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🔑 Secure Account Recovery
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🛡️ Automatic Daily Safety (Backups)
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                📧 Transactional Email Updates
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🔐 Private Prompt Vault
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-gray-200 space-y-4">
+                        <div class="text-indigo-600 font-black text-[10px] uppercase tracking-widest">
+                            03 / Growth & Conversion
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🎁 Admin Discount Coupons
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🔗 Social-Ready Media Links
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🗺️ Google-Ready Sitemap.xml
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                💰 Smart Plan Comparison
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-gray-200 space-y-4">
+                        <div class="text-indigo-600 font-black text-[10px] uppercase tracking-widest">
+                            04 / User Experience
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                ✅ Tactile "Toast" Feedback
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                ⌨️ Instant Copy Shortcuts (⌘C)
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                💨 Super-Fast Page Loads
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                📱 Home-Screen App (PWA)
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-gray-200 space-y-4">
+                        <div class="text-indigo-600 font-black text-[10px] uppercase tracking-widest">
+                            05 / Asset Hub
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🖼️ Result Galleries (Dropzone)
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                📸 Visual Result Previews
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                📂 Shared Creation Playlists
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                ✍️ Snappy Sidebar Dashboard
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-gray-200 space-y-4">
+                        <div class="text-indigo-600 font-black text-[10px] uppercase tracking-widest">
+                            06 / Payments
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                💳 Stripe Card Processing
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                💎 Secure PayPal Integration
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                🛍️ Single Checkout Success
+                            </li>
+                            <li class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                ⏳ Lifetime Token Control
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div
+                    class="mt-12 p-10 bg-indigo-600 rounded-[3rem] text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-indigo-200"
+                >
+                    <div class="flex flex-wrap justify-center md:justify-start gap-8">
+                        <div class="text-center md:text-left">
+                            <div class="text-xl font-black">🔑 Account Recovery</div>
+                            <p class="text-xs text-indigo-200 font-bold uppercase mt-1">Forgot password system</p>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <div class="text-xl font-black">📧 Email Updates</div>
+                            <p class="text-xs text-indigo-200 font-bold uppercase mt-1">Transactional mail system</p>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <div class="text-xl font-black">🖼️ Visual Proof</div>
+                            <p class="text-xs text-indigo-200 font-bold uppercase mt-1">Dropzone image galleries</p>
+                        </div>
+                    </div>
+                    <div class="shrink-0 text-3xl">✨</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-32 bg-white relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-24">
+                    <h2 class="text-6xl font-black text-gray-900 tracking-tighter">
+                        One Price.
+                        <span class="text-indigo-600 underline decoration-indigo-200 decoration-8 underline-offset-4"
+                            >Forever.</span
+                        >
+                    </h2>
+                    <p class="mt-8 text-xl text-gray-500 font-medium max-w-xl mx-auto italic">
+                        Everything unlocked. Secure payment via Stripe or PayPal.
+                    </p>
+                </div>
+
+                <div class="max-w-5xl mx-auto grid lg:grid-cols-2 gap-8 items-stretch">
+                    <div class="bg-gray-50 rounded-[3rem] p-10 flex flex-col border border-gray-100">
+                        <h3 class="text-2xl font-black text-gray-900 uppercase tracking-widest">Explorer</h3>
+                        <p class="text-gray-500 mt-2">See what's possible in the community.</p>
+                        <div class="mt-8 mb-10">
+                            <span class="text-5xl font-black text-gray-900">$0</span>
+                            <span class="text-sm font-bold text-gray-400 uppercase tracking-widest ml-2"
+                                >Free Forever</span
+                            >
+                        </div>
+                        <ul class="space-y-4 mb-10 flex-grow">
+                            <li class="text-sm font-medium text-gray-600 flex items-center gap-2">
+                                ✅ Access to 50+ Free Prompts
+                            </li>
+                            <li class="text-sm font-medium text-gray-600 flex items-center gap-2">
+                                ✅ Public Leaderboard ranking
+                            </li>
+                            <li class="text-sm font-medium text-gray-600 flex items-center gap-2">
+                                ✅ Subscribe to Creators
+                            </li>
+                            <li class="text-sm font-medium text-gray-300 line-through flex items-center gap-2">
+                                ❌ Private Prompt Vault
+                            </li>
+                        </ul>
+                        <a
+                            href="/register"
+                            class="w-full bg-white border-2 border-gray-200 text-gray-900 py-4 rounded-2xl font-black uppercase tracking-widest text-center hover:border-indigo-600 transition shadow-sm active:scale-95"
+                            >Get Started Free</a
+                        >
+                    </div>
+
+                    <div
+                        class="bg-white rounded-[3rem] p-10 flex flex-col border-4 border-indigo-600 shadow-[0_40px_80px_-15px_rgba(79,70,229,0.25)] relative transform lg:-translate-y-4"
+                    >
+                        <div
+                            class="absolute top-0 right-0 -translate-y-1/2 translate-x-0 bg-indigo-600 text-white text-[10px] font-black uppercase px-6 py-2 rounded-full tracking-widest mr-10 shadow-lg"
+                        >
+                            Most Popular
+                        </div>
+                        <h3 class="text-2xl font-black text-gray-900 uppercase tracking-widest">Pro Pro</h3>
+                        <p class="text-gray-500 mt-2">Maximum utility for builders.</p>
+                        <div class="mt-8 mb-10">
+                            <span class="text-5xl font-black text-gray-900">$49</span>
+                            <span class="text-sm font-bold text-gray-400 uppercase tracking-widest ml-2"
+                                >One-time payment</span
+                            >
+                        </div>
+                        <ul class="space-y-4 mb-10 flex-grow">
+                            <li class="text-sm font-bold text-indigo-600 flex items-center gap-2">
+                                💎 Lifetime Catalog access
+                            </li>
+                            <li class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                                ✅ Unlimited Private Storage
+                            </li>
+                            <li class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                                ✅ Advanced Variable Lab & Types
+                            </li>
+                            <li class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                                ✅ 🎖️ Verified Badge status
+                            </li>
+                        </ul>
+
+                        <a
+                            href="/register"
+                            class="block w-full bg-indigo-600 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-center hover:bg-indigo-700 shadow-xl transition active:scale-95"
+                            >Complete Pro Upgrade</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-white border-t border-gray-100 py-24">
+            <div class="max-w-7xl mx-auto px-4 text-center sm:text-left">
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-12">
+                    <div class="max-w-xs mx-auto sm:mx-0">
+                        <div class="flex items-center justify-center sm:justify-start gap-2 mb-6">
+                            <div class="w-6 h-6 bg-indigo-600 rounded flex items-center justify-center">
+                                <svg
+                                    class="w-3.5 h-3.5 text-white"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="3"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                                    />
+                                </svg>
+                            </div>
+                            <span class="text-sm font-black text-gray-900 tracking-tighter uppercase italic"
+                                >PromptLib Pro</span
+                            >
+                        </div>
+                        <p class="text-xs text-gray-400 font-medium leading-relaxed italic">
+                            Engineered for professionals. Ready for action.
+                        </p>
+                    </div>
+                    <div
+                        class="flex flex-wrap justify-center sm:justify-start gap-16 text-xs font-black uppercase tracking-widest text-gray-400"
+                    >
+                        <div class="space-y-4">
+                            <h6 class="text-gray-900">App</h6>
+                            <a href="/library" class="block hover:text-indigo-600 transition">Library</a>
+                            <a href="/library/leaderboard" class="block hover:text-indigo-600 transition">Community</a>
+                        </div>
+                        <div class="space-y-4">
+                            <h6 class="text-gray-900">Legal</h6>
+                            <a href="#" class="block hover:text-indigo-600 transition">Privacy</a>
+                            <a href="#" class="block hover:text-indigo-600 transition">Terms</a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="mt-20 pt-10 border-t border-gray-50 text-[10px] font-black text-gray-300 uppercase tracking-[0.2em] text-center"
+                >
+                    &copy; 2024 Prompt Library Pro. Built for modern engineers.
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

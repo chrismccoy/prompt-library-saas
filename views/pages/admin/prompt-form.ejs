@@ -1,0 +1,165 @@
+<%- include('../../partials/head') %>
+<%- include('../../partials/admin-nav') %>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" x-data="{ tab: 'edit' }">
+  <div class="md:flex md:items-center md:justify-between mb-8">
+    <h2 class="text-3xl font-extrabold text-gray-900">
+      <%= prompt ? 'Edit Prompt' : 'Create New Catalog Item' %>
+    </h2>
+  </div>
+
+  <div class="grid gap-8 lg:grid-cols-3">
+    <div class="lg:col-span-2">
+      <div class="border-b border-gray-200 mb-6">
+        <nav class="-mb-px flex space-x-8">
+          <button @click="tab = 'edit'" :class="tab === 'edit' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700'" class="py-4 px-1 border-b-2 font-medium text-sm transition">
+            Write Content
+          </button>
+          <button @click="tab = 'preview'; $nextTick(() => { document.getElementById('md-preview').innerHTML = marked.parse(document.getElementById('content-area').value); })" :class="tab === 'preview' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700'" class="py-4 px-1 border-b-2 font-medium text-sm transition">
+            Live Preview
+          </button>
+        </nav>
+      </div>
+
+      <form action="<%= action %>?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="space-y-6" id="main-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+        <div x-show="tab === 'edit'" class="bg-white shadow rounded-xl p-8 space-y-6">
+          <div class="grid gap-6 sm:grid-cols-2">
+            
+            <div class="sm:col-span-1">
+              <label class="block text-xs font-black text-gray-400 uppercase tracking-widest">Title</label>
+              <input type="text" name="title" required value="<%= prompt ? prompt.title : '' %>" class="mt-1 block w-full border-gray-300 rounded-lg p-2 border focus:ring-indigo-500 sm:text-sm">
+            </div>
+
+            <div class="sm:col-span-1">
+              <label class="block text-xs font-black text-gray-400 uppercase tracking-widest">Target AI Engine</label>
+              <select name="engine_id" class="mt-1 block w-full border-gray-300 rounded-lg p-2 border focus:ring-indigo-500 sm:text-sm">
+                <% engines.forEach(e => { %>
+                  <option value="<%= e.id %>" <%= prompt && prompt.engine_id === e.id ? 'selected' : '' %>><%= e.name %></option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="sm:col-span-1">
+              <label class="block text-xs font-black text-gray-400 uppercase tracking-widest">Library Category</label>
+              <select name="category_id" class="mt-1 block w-full border-gray-300 rounded-lg p-2 border focus:ring-indigo-500 sm:text-sm">
+                <option value="">None</option>
+                <% categories.forEach(c => { %>
+                  <option value="<%= c.id %>" <%= prompt && prompt.category_id === c.id ? 'selected' : '' %>><%= c.name %></option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="sm:col-span-1">
+              <label class="block text-xs font-black text-gray-400 uppercase tracking-widest">Publication Status</label>
+              <select name="status" class="mt-1 block w-full border-gray-300 rounded-lg p-2 border focus:ring-indigo-500 sm:text-sm">
+                <option value="DRAFT" <%= prompt && prompt.status === 'DRAFT' ? 'selected' : '' %>>Draft</option>
+                <option value="PUBLISHED" <%= prompt && prompt.status === 'PUBLISHED' ? 'selected' : '' %>>Published</option>
+              </select>
+            </div>
+
+            <div class="sm:col-span-1">
+              <label class="block text-xs font-black text-gray-400 uppercase tracking-widest">URL Slug</label>
+              <input type="text" name="slug" placeholder="Auto-generated" value="<%= prompt ? prompt.slug : '' %>" class="mt-1 block w-full border-gray-300 rounded-lg p-2 border sm:text-sm">
+            </div>
+
+            <div class="sm:col-span-1">
+              <label class="block text-xs font-black text-gray-400 uppercase tracking-widest">Upload Assets</label>
+              <input type="file" name="images" multiple accept="image/*" class="mt-1 block w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+            </div>
+
+          </div>
+
+          <div>
+            <label class="block text-xs font-black text-gray-400 uppercase tracking-widest">Summary</label>
+            <input type="text" name="summary" value="<%= prompt ? prompt.summary : '' %>" class="mt-1 block w-full border-gray-300 rounded-lg p-2 border sm:text-sm" placeholder="Short card description...">
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-xs font-black text-gray-400 uppercase tracking-widest">Prompt Body</label>
+              <label class="cursor-pointer text-xs font-bold text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-2 py-1 rounded">
+                Import File
+                <input type="file" accept=".md,.txt" class="hidden" onchange="const f=this.files[0]; const r=new FileReader(); r.onload=(e)=>document.getElementById('content-area').value=e.target.result; r.readAsText(f);">
+              </label>
+            </div>
+            <textarea id="content-area" name="content" rows="12" required class="block w-full border-gray-300 rounded-xl font-mono text-sm p-4 border focus:ring-indigo-500 shadow-inner"><%= prompt ? prompt.content : '' %></textarea>
+          </div>
+
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" name="is_free" value="true" <%= prompt && prompt.is_free ? 'checked' : '' %> class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-5 w-5">
+            <span class="text-sm font-bold text-gray-700 uppercase">Visible to Free Users</span>
+          </label>
+        </div>
+
+        <div x-show="tab === 'preview'" class="bg-white shadow rounded-xl p-8 min-h-[500px] prose prose-indigo max-w-none border border-gray-100" id="md-preview"></div>
+
+        <div class="flex justify-end">
+          <button type="submit" class="bg-indigo-600 text-white px-10 py-3 rounded-xl font-black uppercase tracking-widest hover:bg-indigo-700 transition shadow-xl active:scale-95">
+            Save catalog item
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="lg:col-span-1 space-y-6">
+      
+      <div class="bg-white shadow rounded-xl p-6 border border-gray-100">
+        <h3 class="text-xs font-black text-gray-900 uppercase tracking-widest mb-4">Discovery</h3>
+        <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Tags (Comma separated)</label>
+        <input type="text" name="tags" form="main-form" value="<%= prompt ? prompt.tags : '' %>" class="w-full border-gray-300 rounded-lg p-2 border text-sm" placeholder="writing, seo...">
+      </div>
+
+      <div class="bg-white shadow rounded-xl p-6 border border-gray-100">
+        <h3 class="text-xs font-black text-gray-900 uppercase tracking-widest mb-4">SEO Hardening</h3>
+        <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Focus Keywords</label>
+        <textarea name="meta_keywords" form="main-form" rows="3" class="w-full border-gray-300 rounded-lg p-2 border text-sm" placeholder="best chatgpt prompt for..."><%= prompt ? prompt.meta_keywords : '' %></textarea>
+      </div>
+
+      <% if (prompt) { %>
+        <div class="bg-white shadow rounded-xl p-6 border border-gray-200">
+          <h3 class="text-xs font-black text-gray-900 uppercase tracking-widest mb-4">Visual Proof</h3>
+          
+          <div class="grid grid-cols-2 gap-2 mb-4">
+            <% (prompt.images || []).forEach(img => { %>
+              <div class="relative group">
+                <img src="<%= img.path %>" class="w-full h-20 object-cover rounded-lg border">
+                <form action="/admin/prompts/<%= prompt.id %>/images/<%= img.id %>/delete" method="POST" class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button type="submit" class="bg-red-600 text-white p-1 rounded-full">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12" stroke-width="3"/></svg>
+                  </button>
+                </form>
+              </div>
+            <% }) %>
+          </div>
+
+          <form action="/admin/prompts/<%= prompt.id %>/images" class="dropzone border-2 border-dashed border-indigo-200 rounded-xl bg-indigo-50/30 p-4" id="image-upload-zone">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          </form>
+        </div>
+      <% } %>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  if (document.getElementById('image-upload-zone')) {
+    Dropzone.options.imageUploadZone = {
+      paramName: "file",
+      maxFilesize: <%= uploadConfig.maxSize / 1024 / 1024 %>,
+      acceptedFiles: "image/jpeg,image/png",
+      headers: { 'x-csrf-token': "<%= csrfToken %>" },
+      dictDefaultMessage: "Drop images to upload",
+      success: () => setTimeout(() => window.location.reload(), 800)
+    };
+  }
+</script>
+
+<%- include('../../partials/foot') %>

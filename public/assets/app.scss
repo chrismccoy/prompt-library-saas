@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Overrides */
+[x-cloak] {
+  display: none !important;
+}
+
+/* Typography override for the Markdown content */
+.prose {
+  max-width: 65ch;
+  color: #374151;
+}
